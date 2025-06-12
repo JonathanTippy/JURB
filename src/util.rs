@@ -104,5 +104,5 @@ pub fn reproduce_message(original:Message, rating:f32, channel_to_server_map:&Ha
     if original.content.trim() == "" {
         return format!("Posted by: {}\nLink: {}\nAvg rating: {}\n————————\n{}", original.author.name, og_message_link, rating, &all_attachment_urls)
     }
-    format!("Posted by: {}\nLink: {}\nAvg rating: {}\n————————\n{}\n{}", original.author.name, og_message_link, rating, original.content, &all_attachment_urls)
+    format!("Posted by: {}\nLink: {}\nAvg rating: {:.1}\n————————\n{}\n{}", original.author.name, og_message_link, rating, original.content, &all_attachment_urls)
 }
