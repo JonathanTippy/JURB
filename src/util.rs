@@ -26,6 +26,11 @@ pub fn get_rating(discord:&Discord, message:&Message) -> f32 {
     emoji_value_map.insert("8️⃣", 8 );
     emoji_value_map.insert("9️⃣", 9 );
     emoji_value_map.insert("🔟", 10 );
+    emoji_value_map.insert("😆", 8);
+    emoji_value_map.insert("😂", 9);
+    emoji_value_map.insert("🤣", 10);
+    emoji_value_map.insert("💀", 10);
+
     let mut users_who_rated = HashSet::new();
     let mut user_ratings_map = HashMap::new();
 
