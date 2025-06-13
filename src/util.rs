@@ -107,7 +107,7 @@ pub fn reproduce_message(original:Message, rating:f32, channel_to_server_map:&Ha
     let og_message_link = format!("https://discord.com/channels/{}/{}/{}", channel_to_server_map.get(&original.channel_id).unwrap(), original.channel_id, original.id);
 
     if original.content.trim() == "" {
-        return format!("Posted by: {}\nLink: {}\nAvg rating: {}\n————————\n{}", original.author.name, og_message_link, rating, &all_attachment_urls)
+        return format!("Posted by: {}\nLink: {}\nAvg rating: {:.1}\n————————\n{}", original.author.name, og_message_link, rating, &all_attachment_urls)
     }
     format!("Posted by: {}\nLink: {}\nAvg rating: {:.1}\n————————\n{}\n{}", original.author.name, og_message_link, rating, original.content, &all_attachment_urls)
 }
