@@ -38,6 +38,7 @@ pub fn get_rating(discord:&Discord, message:&Message) -> f32 {
 
     //let mut ratings = Vec::new();
 
+    let OP = &message.author;
     for r in message.reactions.clone() {
 
         //let mut all_emoji:String = String::new();
@@ -57,6 +58,9 @@ pub fn get_rating(discord:&Discord, message:&Message) -> f32 {
                     None, // No 'after' for pagination initially
                 ).unwrap();
             for u in &users {
+                if u.id==OP.id {
+                    continue;
+                }
                 user_ratings_map.insert(u.id, rating);
                 users_who_rated.insert(u.id);
             }
