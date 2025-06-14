@@ -15,21 +15,23 @@ use std::collections::HashSet;
 pub fn get_rating(discord:&Discord, message:&Message) -> f32 {
 
     let mut emoji_value_map = HashMap::new();
-    emoji_value_map.insert("0️⃣", 0 );
-    emoji_value_map.insert("1️⃣", 1 );
-    emoji_value_map.insert("2️⃣", 2 );
-    emoji_value_map.insert("3️⃣", 3 );
-    emoji_value_map.insert("4️⃣", 4 );
-    emoji_value_map.insert("5️⃣", 5 );
-    emoji_value_map.insert("6️⃣", 6 );
-    emoji_value_map.insert("7️⃣", 7 );
-    emoji_value_map.insert("8️⃣", 8 );
-    emoji_value_map.insert("9️⃣", 9 );
-    emoji_value_map.insert("🔟", 10 );
-    emoji_value_map.insert("😆", 8);
-    emoji_value_map.insert("😂", 9);
-    emoji_value_map.insert("🤣", 10);
-    emoji_value_map.insert("💀", 10);
+    emoji_value_map.insert("0️⃣", 0 ); //0
+    emoji_value_map.insert("1️⃣", 1 ); //1
+    emoji_value_map.insert("2️⃣", 2 ); //2
+    emoji_value_map.insert("3️⃣", 3 ); //3
+    emoji_value_map.insert("4️⃣", 4 ); //4
+    emoji_value_map.insert("5️⃣", 5 ); //5
+    emoji_value_map.insert("6️⃣", 6 ); //6
+    emoji_value_map.insert("7️⃣", 7 ); //7
+    emoji_value_map.insert("8️⃣", 8 ); //8
+    emoji_value_map.insert("9️⃣", 9 ); //9
+    emoji_value_map.insert("🔟", 10 ); //10
+    emoji_value_map.insert("🤭", 7); //hand over mouth
+    emoji_value_map.insert("😆", 8); //laughing
+    emoji_value_map.insert("😂", 9); //joy
+    emoji_value_map.insert("🤣", 10); //rofl
+    emoji_value_map.insert("💀", 10); //skull
+
 
     let mut users_who_rated = HashSet::new();
     let mut user_ratings_map = HashMap::new();
