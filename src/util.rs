@@ -85,21 +85,25 @@ pub fn get_rating(discord:&Discord, message:&Message) -> f32 {
 
 pub fn cull_meme_cache(discord:&Discord, meme_cache:&Message, max_len:usize, ) {
     if &meme_cache.content.split("\n").collect::<Vec<_>>().len()>&max_len {
+        println!("meme cache is too long, culling...");
 
         let extras = &meme_cache.content.split("\n").collect::<Vec<_>>().len()-(max_len);
 
         let old_cache = &meme_cache.content;
         let mut new_cache = String::new();
-        let i = 0;
+        let  mut i = 0;
         for line in old_cache.split("\n").collect::<Vec<_>>() {
             if i==0 {
-                new_cache = new_cache + line; continue
+                new_cache += line; continue
             }
-            if i>extras {
-                new_cache = new_cache + line;
+            if i<extras {
+                new_cache += "\n";
+                new_cache += line;
             }
+            i+=1;
         }
         let _ = discord.edit_message(meme_cache.channel_id, meme_cache.id, &new_cache);
+        println!("meme cache culled.")
     }
 }
 

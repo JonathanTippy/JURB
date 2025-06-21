@@ -29,7 +29,7 @@ mod simple_user_input {
 
 const BOT_CACHE_NAME:&str = "botcache";
 
-const MEME_CACHE_DEPTH:usize = 20; // more than about thirty might hit the character limit
+const MEME_CACHE_LINES:usize = 3; // more than about thirty might hit the character limit
 
 struct ServerMap {
     memes_channel_id: u64
@@ -86,6 +86,8 @@ fn main() {
                                 }
                                 // remember cache
                                 serverid_to_cache_map.insert(server.id, (message.id, channel.id));
+                                // cull cache
+                                cull_meme_cache(&discord, &message, MEME_CACHE_LINES);
                             }
 
                             Err(message) => {
@@ -101,7 +103,6 @@ fn main() {
                                 serverid_to_cache_map.insert(server.id, (sent.id, channel.id));
                             }
                         }
-
                     }
                     None => {
                         // get map from user
@@ -231,7 +232,7 @@ fn main() {
                 println!("{} added or removed {} on {}", reaction.user_id, reaction_emoji, reaction.message_id);
 
                 let botcache = discord.get_message(botcache_channel_id, botcache_id).unwrap();
-                cull_meme_cache(&discord, &botcache, MEME_CACHE_DEPTH);
+                cull_meme_cache(&discord, &botcache, MEME_CACHE_LINES);
             }
             Ok(_) => {}
             Err(discord::Error::Closed(code, body)) => {
