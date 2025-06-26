@@ -94,7 +94,7 @@ pub fn cull_meme_cache(discord:&Discord, meme_cache:&Message, max_len:usize, ) {
         let  mut i = 0;
         for line in old_cache.split("\n").collect::<Vec<_>>() {
             if i==0 {
-                new_cache += line; continue
+                new_cache += line;  i+=1; continue
             }
             if i<extras {
                 new_cache += "\n";
