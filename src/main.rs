@@ -154,65 +154,64 @@ fn main() {
                 match Discord::get_message(&discord, reaction.channel_id, reaction.message_id) {
                     Ok(message) => {
 
+                        let rating = get_rating(&discord, &message);
+                        println!("rating: {}", rating);
 
-                        if (funny_channels_map.contains_key(&message.channel_id)) {
-
-                            let rating = get_rating(&discord, &message);
-                            println!("rating: {}", rating);
-
-                            if rating > 7.999 {
+                        if rating > 7.999 {
 
 
-                                let message_reproduction = reproduce_message(message.clone(), rating, &channel_to_server_map);
-                                if !original_to_reproduction_map.contains_key(&message.id) {
-                                    let sent = discord.send_message(
-                                        *funny_channels_map.get(&message.channel_id).unwrap()
-                                        , &message_reproduction
-                                        , ""
-                                        , false
-                                    ).unwrap();
-                                    original_to_reproduction_map.insert(message.id, sent.id);
-                                    let _ = discord.edit_message(
-                                        botcache_channel_id
-                                        , botcache_id
-                                        , &format!(
-                                            "{}\n{}:{}"
-                                            , discord.get_message(
-                                                botcache_channel_id
-                                                , botcache_id
-                                            ).unwrap().content
-                                            , message.id
-                                            , sent.id
-                                        )
-                                    );
-                                } else {
-                                    let message_reproduction = reproduce_message(message.clone(), rating, &channel_to_server_map);
-
-                                    let _ = discord.edit_message(
-                                        *funny_channels_map.get(&message.channel_id).unwrap()
-                                        , *original_to_reproduction_map.get(&message.id).unwrap()
-                                        , &message_reproduction
-                                    );
-                                }
+                            let message_reproduction = reproduce_message(message.clone(), rating, &channel_to_server_map);
+                            if !original_to_reproduction_map.contains_key(&message.id) {
+                                let sent = discord.send_message(
+                                    *funny_channels_map.get(&message.channel_id).unwrap()
+                                    , &message_reproduction
+                                    , ""
+                                    , false
+                                ).unwrap();
+                                original_to_reproduction_map.insert(message.id, sent.id);
+                                let _ = discord.edit_message(
+                                    botcache_channel_id
+                                    , botcache_id
+                                    , &format!(
+                                        "{}\n{}:{}"
+                                        , discord.get_message(
+                                            botcache_channel_id
+                                            , botcache_id
+                                        ).unwrap().content
+                                        , message.id
+                                        , sent.id
+                                    )
+                                );
                             } else {
-                                if original_to_reproduction_map.contains_key(&message.id) {
-                                    let _ = discord.delete_message(*funny_channels_map.get(&message.channel_id).unwrap(), *original_to_reproduction_map.get(&message.id).unwrap());
-                                    let botcache = discord.get_message(
-                                        botcache_channel_id,
-                                        botcache_id
-                                    ).unwrap();
-                                    let mut old_botcache = botcache.content.split("\n").collect::<Vec<_>>();
-                                    old_botcache.pop();
-                                    let _ = discord.edit_message(
-                                        botcache_channel_id
-                                        , botcache_id
-                                        , &old_botcache.join("\n")
-                                    );
-                                    original_to_reproduction_map.remove(&message.id);
-                                }
-                            }
+                                let message_reproduction = reproduce_message(message.clone(), rating, &channel_to_server_map);
 
+                                let _ = discord.edit_message(
+                                    *funny_channels_map.get(&message.channel_id).unwrap()
+                                    , *original_to_reproduction_map.get(&message.id).unwrap()
+                                    , &message_reproduction
+                                );
+                            }
+                        } else {
+                            if original_to_reproduction_map.contains_key(&message.id) {
+                                let _ = discord.delete_message(*funny_channels_map.get(&message.channel_id).unwrap(), *original_to_reproduction_map.get(&message.id).unwrap());
+                                let botcache = discord.get_message(
+                                    botcache_channel_id,
+                                    botcache_id
+                                ).unwrap();
+                                let mut old_botcache = botcache.content.split("\n").collect::<Vec<_>>();
+                                old_botcache.pop();
+                                let _ = discord.edit_message(
+                                    botcache_channel_id
+                                    , botcache_id
+                                    , &old_botcache.join("\n")
+                                );
+                                original_to_reproduction_map.remove(&message.id);
+                            }
                         }
+
+
+
+
 
 
                     }
