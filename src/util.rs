@@ -87,16 +87,13 @@ pub fn cull_meme_cache(discord:&Discord, meme_cache:&Message, max_len:usize, ) {
     if &meme_cache.content.split("\n").collect::<Vec<_>>().len()>&max_len {
         println!("meme cache is too long, culling...");
 
-        let extras = &meme_cache.content.split("\n").collect::<Vec<_>>().len()-(max_len);
-
         let old_cache = &meme_cache.content;
         let mut new_cache = String::new();
-        let  mut i = 0;
+        let  mut i = 1;
+        new_cache += old_cache.split("\n")[0];
+
         for line in old_cache.split("\n").collect::<Vec<_>>() {
-            if i==0 {
-                new_cache += line;  i+=1; continue
-            }
-            if i<extras {
+            if i<max_len {
                 new_cache += "\n";
                 new_cache += line;
             }
