@@ -29,7 +29,7 @@ mod simple_user_input {
 
 const BOT_CACHE_NAME:&str = "botcache";
 
-const MEME_CACHE_LINES:usize = 3; // more than about thirty might hit the character limit
+const MEME_CACHE_LINES:usize = 30; // more than about thirty might hit the character limit
 
 struct ServerMap {
     memes_channel_id: u64
