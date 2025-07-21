@@ -142,7 +142,7 @@ fn main() {
                     );
                     let duration = start.elapsed();
                     println!("Time elapsed sending a message: {:?}", duration);
-                } else if message.content == "@JURB is this true?" {
+                } else if message.content.contains("s this true?") && message.content.contains("@") {
                     let start = Instant::now();
                     if rand::random() {
                         let _ = discord.send_message(
