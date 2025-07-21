@@ -142,6 +142,25 @@ fn main() {
                     );
                     let duration = start.elapsed();
                     println!("Time elapsed sending a message: {:?}", duration);
+                } else if message.content == "@JURB is this true?" {
+                    let start = Instant::now();
+                    if rand::random() {
+                        let _ = discord.send_message(
+                            message.channel_id,
+                            "yup, its true.",
+                            "",
+                            false,
+                        );
+                    } else {
+                        let _ = discord.send_message(
+                            message.channel_id,
+                            "not this time; a total fabrication.",
+                            "",
+                            false,
+                        );
+                    }
+                    let duration = start.elapsed();
+                    println!("Time elapsed sending a message: {:?}", duration);
                 } else if message.content == "!quit" {
                     println!("Quitting.");
                     break;
